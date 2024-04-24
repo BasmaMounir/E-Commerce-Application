@@ -11,8 +11,8 @@ class SplashView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Timer(const Duration(seconds: 10), () {
-      Navigator.pushReplacementNamed(context, Routes.homeRouteName);
+    Timer(const Duration(seconds: 15), () {
+      Navigator.pushReplacementNamed(context, Routes.loginRouteName);
     });
     return Scaffold(
       //https://lottie.host/e7214c83-d3ad-46a7-8ef0-471ef3af2088/0xp3SXM1cF.json
