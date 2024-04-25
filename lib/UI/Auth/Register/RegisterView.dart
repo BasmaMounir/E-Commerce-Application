@@ -1,4 +1,5 @@
 import 'package:e_commerce_application/Core/DI.dart';
+import 'package:e_commerce_application/Core/PrefsHelper.dart';
 import 'package:e_commerce_application/Core/Utils/Assets.dart';
 import 'package:e_commerce_application/Core/Utils/Colors.dart';
 import 'package:e_commerce_application/Core/Utils/DialogUtils.dart';
@@ -35,6 +36,7 @@ class RegisterView extends StatelessWidget {
                   context, 'Waiting to load data');
             } else if (state is RegisterSuccessState) {
               DialogUtils.hideDialoge(context);
+              PrefsHelper.saveToken(state.registerResponseEntity?.token ?? '');
               DialogUtils.showSuccessAlertDialog(context,
                   'Welcome ${state.registerResponseEntity.user?.name ?? ' '}',
                   onConfirm: () => Navigator.pushReplacementNamed(

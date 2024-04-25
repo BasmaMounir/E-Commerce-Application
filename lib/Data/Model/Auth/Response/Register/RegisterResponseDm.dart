@@ -1,6 +1,6 @@
 import 'package:e_commerce_application/Domain/Entity/RegisterResponseEntity.dart';
 
-import 'UserDM.dart';
+import '../UserDM.dart';
 
 /// message : "success"
 /// statusMsg : ""

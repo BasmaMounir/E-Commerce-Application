@@ -43,6 +43,7 @@ dependencies:
   dartz: ^0.10.1
   connectivity_plus: ^5.0.2
   quickalert: ^1.1.0
+  shared_preferences: ^2.2.3
 
 
 dev_dependencies:

@@ -6,13 +6,19 @@ import 'package:e_commerce_application/Core/Utils/Routes.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../Core/PrefsHelper.dart';
+
 class SplashView extends StatelessWidget {
   const SplashView({super.key});
 
   @override
   Widget build(BuildContext context) {
     Timer(const Duration(seconds: 15), () {
-      Navigator.pushReplacementNamed(context, Routes.loginRouteName);
+      Navigator.pushReplacementNamed(
+          context,
+          PrefsHelper.getToken().isNotEmpty
+              ? Routes.homeRouteName
+              : Routes.loginRouteName);
     });
     return Scaffold(
       //https://lottie.host/e7214c83-d3ad-46a7-8ef0-471ef3af2088/0xp3SXM1cF.json

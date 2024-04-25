@@ -1,6 +1,8 @@
 import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
+import 'package:e_commerce_application/Core/PrefsHelper.dart';
 import 'package:e_commerce_application/Core/Utils/Assets.dart';
 import 'package:e_commerce_application/Core/Utils/Colors.dart';
+import 'package:e_commerce_application/Core/Utils/Routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -52,6 +54,17 @@ class _HomeViewState extends State<HomeView> {
                 child: IconButton(
                   icon: SvgPicture.asset(Assets.searchIcon),
                   onPressed: () {},
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(6),
+                child: IconButton(
+                  icon: Icon(Icons.logout_outlined),
+                  onPressed: () {
+                    PrefsHelper.clearToken();
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, Routes.loginRouteName, (route) => false);
+                  },
                 ),
               )
             ],
