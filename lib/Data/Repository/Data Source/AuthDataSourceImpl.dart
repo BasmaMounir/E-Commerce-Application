@@ -26,8 +26,8 @@ class AuthDataSourceImpl implements AuthDataSource {
   Future<Either<Failures, LoginResponseEntity>> login(
       String email, String password) async {
     var either = await apiManager.login(email, password);
-    return either.fold((erroe) {
-      return Left(erroe);
+    return either.fold((error) {
+      return Left(error);
     }, (response) {
       return Right(response.toLoginResponseEntity());
     });
