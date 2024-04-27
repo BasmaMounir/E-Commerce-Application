@@ -6,14 +6,19 @@
 import 'package:e_commerce_application/Core/Api/ApiManager.dart';
 import 'package:e_commerce_application/Data/Repository/Data%20Source/AuthDataSourceImpl.dart';
 import 'package:e_commerce_application/Data/Repository/Data%20Source/GetAllCategoriesOrBrandsDataSourceImpl.dart';
+import 'package:e_commerce_application/Data/Repository/Data%20Source/GetAllProductsDataSourceImpl.dart';
 import 'package:e_commerce_application/Data/Repository/repository/AuthRepositoryImpl.dart';
 import 'package:e_commerce_application/Data/Repository/repository/GetAllCategoriesRepositoryImpl.dart';
+import 'package:e_commerce_application/Data/Repository/repository/GetAllProductsRepositoryImpl.dart';
 import 'package:e_commerce_application/Domain/Repository/Data%20Source/AuthDataSource.dart';
 import 'package:e_commerce_application/Domain/Repository/Data%20Source/GetAllCategoriesOrBrandsDataSource.dart';
+import 'package:e_commerce_application/Domain/Repository/Data%20Source/GetAllProductsDataSource.dart';
 import 'package:e_commerce_application/Domain/Repository/repository/AuthRepository.dart';
 import 'package:e_commerce_application/Domain/Repository/repository/GetAllCategoriesOrBrandsRepository.dart';
+import 'package:e_commerce_application/Domain/Repository/repository/GetAllProductsRepository.dart';
 import 'package:e_commerce_application/Domain/UseCase/GetAllBrandsUseCase.dart';
 import 'package:e_commerce_application/Domain/UseCase/GetAllCategoriesUseCase.dart';
+import 'package:e_commerce_application/Domain/UseCase/GetAllProductsUseCase.dart';
 import 'package:e_commerce_application/Domain/UseCase/LoginUseCase.dart';
 import 'package:e_commerce_application/Domain/UseCase/RegisterUseCase.dart';
 
@@ -33,6 +38,20 @@ GetAllCategoriesUseCase injectAllCategoriesUseCase() {
 GetAllBrandsUseCase injectAllBrandsUseCase() {
   return GetAllBrandsUseCase(
       allCategoriesRepository: injectGetAllCategoriesRepository());
+}
+
+GetAllProductsUseCase injectAllProductsUseCase() {
+  return GetAllProductsUseCase(
+      allProductsRepository: injectGetAllProductsRepository());
+}
+
+GetAllProductsRepository injectGetAllProductsRepository() {
+  return GetAllProductsRepositoryImpl(
+      allProductsDataSource: injectProductsDataSource());
+}
+
+GetAllProductsDataSource injectProductsDataSource() {
+  return GetAllProductsDataSourceImpl(apiManager: ApiManager.getInstance());
 }
 
 GetAllCategoriesOrBrandsRepository injectGetAllCategoriesRepository() {

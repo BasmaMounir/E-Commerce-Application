@@ -1,18 +1,18 @@
-import 'package:e_commerce_application/Domain/Entity/Categories%20or%20Brands/CategoriesOrBrandsResponseEntity.dart';
+import 'package:e_commerce_application/Data/Model/Metadata.dart';
+import 'package:e_commerce_application/Domain/Entity/Products/ProductsResponseEntity.dart';
 
-import '../Metadata.dart';
-import 'CategoriesOrBrandsDM.dart';
+import 'ProductsDM.dart';
 
-class CategoriesOrBrandsResponseDm extends CategoriesOrBrandsResponseEntity {
-  CategoriesOrBrandsResponseDm({
+class ProductsResponseDM extends ProductsResponseEntity {
+  ProductsResponseDM({
     super.results,
     this.statusMsg,
-    this.metadata,
     this.message,
+    this.metadata,
     super.data,
   });
 
-  CategoriesOrBrandsResponseDm.fromJson(dynamic json) {
+  ProductsResponseDM.fromJson(dynamic json) {
     results = json['results'];
     statusMsg = json['statusMsg'];
     message = json['message'];
@@ -21,7 +21,7 @@ class CategoriesOrBrandsResponseDm extends CategoriesOrBrandsResponseEntity {
     if (json['data'] != null) {
       data = [];
       json['data'].forEach((v) {
-        data?.add(CategoriesOrBrandsDM.fromJson(v));
+        data?.add(ProductsDM.fromJson(v));
       });
     }
   }

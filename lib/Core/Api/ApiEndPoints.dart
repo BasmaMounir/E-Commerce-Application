@@ -4,4 +4,5 @@ class ApiEndPoints {
   static const String loginEndPoint = '/api/v1/auth/signin';
   static const String allCategoriesEndPoint = 'api/v1/categories';
   static const String allBrandsEndPoint = '/api/v1/brands';
+  static const String allProductsEndPoint = '/api/v1/products';
 }

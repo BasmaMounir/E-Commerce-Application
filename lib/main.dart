@@ -1,5 +1,7 @@
 import 'package:e_commerce_application/Core/PrefsHelper.dart';
 import 'package:e_commerce_application/Core/Utils/Routes.dart';
+import 'package:e_commerce_application/UI/AppBarItems/CategoriesAppBar/ProductDetails.dart';
+import 'package:e_commerce_application/UI/AppBarItems/CategoriesAppBar/ProductsView.dart';
 import 'package:e_commerce_application/UI/Auth/Login/LoginView.dart';
 import 'package:e_commerce_application/UI/Auth/Register/RegisterView.dart';
 import 'package:e_commerce_application/UI/Home/HomeView.dart';
@@ -30,6 +32,8 @@ class MyApp extends StatelessWidget {
           Routes.registerRouteName: (context) => RegisterView(),
           Routes.loginRouteName: (context) => LoginView(),
           Routes.homeRouteName: (context) => HomeView(),
+          Routes.categoriesRouteName: (context) => ProductsView(),
+          Routes.productDetailsRouteName: (context) => ProductDetails(),
         },
       ),
     );

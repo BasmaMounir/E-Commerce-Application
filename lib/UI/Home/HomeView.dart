@@ -3,8 +3,8 @@ import 'package:e_commerce_application/Core/PrefsHelper.dart';
 import 'package:e_commerce_application/Core/Utils/Assets.dart';
 import 'package:e_commerce_application/Core/Utils/Colors.dart';
 import 'package:e_commerce_application/Core/Utils/Routes.dart';
-import 'package:e_commerce_application/UI/Home/HomeStates.dart';
-import 'package:e_commerce_application/UI/Home/HomeViewModel.dart';
+import 'package:e_commerce_application/UI/Home/Cubit/HomeStates.dart';
+import 'package:e_commerce_application/UI/Home/Cubit/HomeViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -39,7 +39,9 @@ class _HomeViewState extends State<HomeView> {
                 leading: IconButton(
                   iconSize: 55,
                   icon: SvgPicture.asset(Assets.categoryIcon),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, Routes.categoriesRouteName);
+                  },
                 ),
                 actions: [
                   Padding(

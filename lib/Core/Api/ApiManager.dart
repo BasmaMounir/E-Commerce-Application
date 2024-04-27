@@ -8,6 +8,7 @@ import 'package:e_commerce_application/Data/Model/Auth/Request/RegisterRequest.d
 import 'package:e_commerce_application/Data/Model/Auth/Response/Login/LoginResponseDm.dart';
 import 'package:e_commerce_application/Data/Model/Auth/Response/Register/RegisterResponseDm.dart';
 import 'package:e_commerce_application/Data/Model/Categories%20or%20Brands/CategoriesOrBrandsResponseDm.dart';
+import 'package:e_commerce_application/Data/Model/ProductsDM/ProductsResponseDM.dart';
 import 'package:e_commerce_application/Domain/Entity/Failures.dart';
 import 'package:http/http.dart' as http;
 
@@ -102,6 +103,26 @@ class ApiManager {
       } else {
         return Left(
             ServerError(errorMessage: getCategoriesResponse.message ?? ''));
+      }
+    } else {
+      return Left(NetworkError(errorMessage: 'No connection'));
+    }
+  }
+
+  Future<Either<Failures, ProductsResponseDM>> getAllProducts() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      Uri url =
+          Uri.https(ApiEndPoints.baseUrl, ApiEndPoints.allProductsEndPoint);
+      var response = await http.get(url);
+      var getProductsResponse =
+          ProductsResponseDM.fromJson(jsonDecode(response.body));
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return right(getProductsResponse);
+      } else {
+        return Left(
+            ServerError(errorMessage: getProductsResponse.message ?? ''));
       }
     } else {
       return Left(NetworkError(errorMessage: 'No connection'));
