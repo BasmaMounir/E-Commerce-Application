@@ -1,8 +1,10 @@
+import 'package:e_commerce_application/Core/DI.dart';
 import 'package:e_commerce_application/Core/Utils/Assets.dart';
 import 'package:e_commerce_application/Core/Utils/Colors.dart';
 import 'package:e_commerce_application/Core/Utils/ReusableWidgets/AddToFavoriteList.dart';
 import 'package:e_commerce_application/Core/Utils/ReusableWidgets/IncrementAndDecrementWidget.dart';
 import 'package:e_commerce_application/Domain/Entity/Products/ProductsEntity.dart';
+import 'package:e_commerce_application/UI/AppBarItems/CategoriesAppBar/Cubit/ProductsViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,6 +20,9 @@ class ProductDetails extends StatefulWidget {
 class _ProductDetailsState extends State<ProductDetails> {
   @override
   Widget build(BuildContext context) {
+    ProductsViewModel viewModel = ProductsViewModel(
+        productsUseCase: injectAllProductsUseCase(),
+        addToCartUseCase: injectAddToCartUseCase());
     var args = ModalRoute.of(context)!.settings.arguments as ProductsEntity;
     return Scaffold(
       backgroundColor: MyColors.lightYellow,
@@ -182,7 +187,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   borderRadius: BorderRadius.circular(10.r)),
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                MainAxisAlignment.spaceEvenly,
                                 children: [
                                   SvgPicture.asset(
                                     Assets.cartIcon,
@@ -196,7 +201,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   )
                                 ],
                               )),
-                          onTap: () {},
+                          onTap: () {
+                            viewModel.addToCart(args.id ?? '');
+                          },
                         ),
                         const IncrementAndDecrementWidget()
                       ],

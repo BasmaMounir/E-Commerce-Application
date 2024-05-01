@@ -7,14 +7,19 @@ class CustomTextField extends StatefulWidget {
   TextEditingController controller;
   TextInputType? inputType;
   String? Function(String?)? validator;
-  bool isObscure = false;
+  bool isObscure;
+  Color? titleColor;
+  Color textFieldColor;
 
   CustomTextField(
       {super.key,
+      required this.titleColor,
+      required this.textFieldColor,
       required this.title,
       required this.hintTitle,
       required this.controller,
       required this.validator,
+      this.isObscure = false,
       this.inputType = TextInputType.text});
 
   @override
@@ -31,7 +36,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           padding: const EdgeInsets.all(10),
           child: Text(
             widget.title,
-            style: const TextStyle(color: MyColors.white, fontSize: 18),
+            style: TextStyle(color: widget.titleColor, fontSize: 18),
           ),
         ),
         Padding(
@@ -39,7 +44,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           child: TextFormField(
             decoration: InputDecoration(
                 hintText: widget.hintTitle,
-                hintStyle: const TextStyle(color: MyColors.honeydew),
+                hintStyle: TextStyle(color: widget.titleColor),
                 suffixIcon: widget.title == 'Password'
                     ? IconButton(
                         icon: Icon(
@@ -57,7 +62,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
                     borderSide:
-                        const BorderSide(width: 2, color: MyColors.white)),
+                        BorderSide(width: 2, color: widget.textFieldColor)),
                 errorBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
                     borderSide:
@@ -65,7 +70,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
                     borderSide:
-                        const BorderSide(width: 2, color: MyColors.white))),
+                        BorderSide(width: 2, color: widget.textFieldColor))),
             style: const TextStyle(color: MyColors.honeydew),
             onTap: () {},
             controller: widget.controller,

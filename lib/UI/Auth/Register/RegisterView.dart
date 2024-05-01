@@ -6,6 +6,7 @@ import 'package:e_commerce_application/Core/Utils/DialogUtils.dart';
 import 'package:e_commerce_application/Core/Utils/ReusableWidgets/CustomButton.dart';
 import 'package:e_commerce_application/Core/Utils/ReusableWidgets/CustomTextField.dart';
 import 'package:e_commerce_application/Core/Utils/Routes.dart';
+import 'package:e_commerce_application/Core/Utils/ToastMessage.dart';
 import 'package:e_commerce_application/UI/Auth/Register/Cubit/RegisterViewModel.dart';
 import 'package:e_commerce_application/UI/Auth/Register/Cubit/states.dart';
 import 'package:flutter/material.dart';
@@ -36,17 +37,24 @@ class RegisterView extends StatelessWidget {
                   context, 'Waiting to load data');
             } else if (state is RegisterSuccessState) {
               DialogUtils.hideDialoge(context);
-              PrefsHelper.saveToken(state.registerResponseEntity?.token ?? '');
-              DialogUtils.showSuccessAlertDialog(context,
-                  'Welcome ${state.registerResponseEntity.user?.name ?? ' '}',
-                  onConfirm: () => Navigator.pushReplacementNamed(
-                        context,
-                        Routes.homeRouteName,
-                      ),
-                  confirmText: 'Go to Home');
+              PrefsHelper.saveData(
+                  key: 'token',
+                  value: state.registerResponseEntity?.token ?? '');
+              ToastMessage.showToastMessage(
+                message:
+                    "Login successfully\n Welcome ${state.registerResponseEntity.user?.name ?? ' '}",
+                toastColor: MyColors.lightSeaGreen,
+              );
+              Navigator.pushReplacementNamed(
+                context,
+                Routes.homeRouteName,
+              );
             } else if (state is RegisterErrorState) {
               DialogUtils.hideDialoge(context);
-              DialogUtils.showErrorAlertDialog(context, state.errorMessage);
+              ToastMessage.showToastMessage(
+                message: state.errorMessage,
+                toastColor: MyColors.salmon,
+              );
             }
           },
           child: Scaffold(
@@ -73,6 +81,8 @@ class RegisterView extends StatelessWidget {
                       height: 50.h,
                     ),
                     CustomTextField(
+                      textFieldColor: MyColors.white,
+                      titleColor: MyColors.white,
                       title: 'Full Name',
                       hintTitle: 'enter your full name',
                       validator: (value) {
@@ -84,6 +94,8 @@ class RegisterView extends StatelessWidget {
                       controller: viewModel.nameController,
                     ),
                     CustomTextField(
+                      textFieldColor: MyColors.white,
+                      titleColor: MyColors.white,
                       title: 'E-mail address',
                       hintTitle: 'enter your email address',
                       validator: (value) {
@@ -100,6 +112,8 @@ class RegisterView extends StatelessWidget {
                       controller: viewModel.emailController,
                     ),
                     CustomTextField(
+                      textFieldColor: MyColors.white,
+                      titleColor: MyColors.white,
                       title: 'Mobile Number',
                       inputType: TextInputType.number,
                       hintTitle: 'enter your mobile no.',
@@ -115,6 +129,8 @@ class RegisterView extends StatelessWidget {
                       controller: viewModel.phoneController,
                     ),
                     CustomTextField(
+                      textFieldColor: MyColors.white,
+                      titleColor: MyColors.white,
                       inputType: TextInputType.visiblePassword,
                       title: 'Password',
                       hintTitle: 'enter your password',

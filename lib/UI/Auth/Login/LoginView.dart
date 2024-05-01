@@ -5,11 +5,14 @@ import 'package:e_commerce_application/Core/Utils/DialogUtils.dart';
 import 'package:e_commerce_application/Core/Utils/ReusableWidgets/CustomButton.dart';
 import 'package:e_commerce_application/Core/Utils/ReusableWidgets/CustomTextField.dart';
 import 'package:e_commerce_application/Core/Utils/Routes.dart';
+import 'package:e_commerce_application/Core/Utils/ToastMessage.dart';
 import 'package:e_commerce_application/UI/Auth/Login/Cubit/LoginViewModel.dart';
 import 'package:e_commerce_application/UI/Auth/Login/Cubit/states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../Core/PrefsHelper.dart';
 
 class LoginView extends StatelessWidget {
   LoginView({super.key});
@@ -35,16 +38,25 @@ class LoginView extends StatelessWidget {
                 DialogUtils.showLoadingAlertDialog(context, 'Loading...');
               } else if (state is LoginSuccessState) {
                 DialogUtils.hideDialoge(context);
-                DialogUtils.showSuccessAlertDialog(context,
-                    'Welcome ${state.loginResponseEntity.user?.name ?? ' '}',
-                    onConfirm: () => Navigator.pushReplacementNamed(
-                          context,
-                          Routes.homeRouteName,
-                        ),
-                    confirmText: 'Go to Home');
+                PrefsHelper.saveData(
+                    key: 'token',
+                    value: state.loginResponseEntity?.token ?? '');
+                ToastMessage.showToastMessage(
+                  message:
+                      "Login successfully\n Welcome ${state.loginResponseEntity.user?.name ?? ' '}",
+                  toastColor: MyColors.lightSeaGreen,
+                );
+
+                Navigator.pushReplacementNamed(
+                  context,
+                  Routes.homeRouteName,
+                );
               } else if (state is LoginErrorState) {
                 DialogUtils.hideDialoge(context);
-                DialogUtils.showErrorAlertDialog(context, state.errorMessage);
+                ToastMessage.showToastMessage(
+                  message: state.errorMessage,
+                  toastColor: MyColors.salmon,
+                );
               }
             },
             child: Scaffold(
@@ -81,6 +93,8 @@ class LoginView extends StatelessWidget {
                             )),
                       ),
                       CustomTextField(
+                        textFieldColor: MyColors.white,
+                        titleColor: MyColors.white,
                         title: 'User Name',
                         hintTitle: 'enter your name',
                         validator: (value) {
@@ -97,6 +111,8 @@ class LoginView extends StatelessWidget {
                         controller: viewModel.emailController,
                       ),
                       CustomTextField(
+                        textFieldColor: MyColors.white,
+                        titleColor: MyColors.white,
                         title: 'Password',
                         hintTitle: 'enter your password',
                         validator: (value) {

@@ -3,10 +3,12 @@ import 'dart:convert';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dartz/dartz.dart';
 import 'package:e_commerce_application/Core/Api/ApiEndPoints.dart';
+import 'package:e_commerce_application/Core/PrefsHelper.dart';
 import 'package:e_commerce_application/Data/Model/Auth/Request/LoginReuest.dart';
 import 'package:e_commerce_application/Data/Model/Auth/Request/RegisterRequest.dart';
 import 'package:e_commerce_application/Data/Model/Auth/Response/Login/LoginResponseDm.dart';
 import 'package:e_commerce_application/Data/Model/Auth/Response/Register/RegisterResponseDm.dart';
+import 'package:e_commerce_application/Data/Model/Cart/AddCartResponseDM.dart';
 import 'package:e_commerce_application/Data/Model/Categories%20or%20Brands/CategoriesOrBrandsResponseDm.dart';
 import 'package:e_commerce_application/Data/Model/ProductsDM/ProductsResponseDM.dart';
 import 'package:e_commerce_application/Domain/Entity/Failures.dart';
@@ -123,6 +125,29 @@ class ApiManager {
       } else {
         return Left(
             ServerError(errorMessage: getProductsResponse.message ?? ''));
+      }
+    } else {
+      return Left(NetworkError(errorMessage: 'No connection'));
+    }
+  }
+
+  Future<Either<Failures, AddCartResponseDm>> addToCart(
+      String productId) async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      var token = PrefsHelper.getData(key: 'token');
+      Uri url = Uri.https(ApiEndPoints.baseUrl, ApiEndPoints.addToCartEndPoint);
+      var response = await http.post(url,
+          body: {'productId': productId}, headers: {'token': token.toString()});
+      var getCartResponse =
+          AddCartResponseDm.fromJson(jsonDecode(response.body));
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return right(getCartResponse);
+      } else if (response.statusCode == 401) {
+        return Left(ServerError(errorMessage: getCartResponse.message ?? ''));
+      } else {
+        return Left(ServerError(errorMessage: getCartResponse.message ?? ''));
       }
     } else {
       return Left(NetworkError(errorMessage: 'No connection'));

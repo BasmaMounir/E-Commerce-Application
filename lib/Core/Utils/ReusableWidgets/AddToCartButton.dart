@@ -3,14 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AddToCartButton extends StatelessWidget {
-  const AddToCartButton({super.key});
+  void Function()? onTap;
+
+  AddToCartButton({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.bottomRight,
       child: InkWell(
-        onTap: () {},
+        onTap: onTap,
         child: Container(
             margin: EdgeInsets.all(10),
             height: 40.h,

@@ -46,6 +46,7 @@ dependencies:
   shared_preferences: ^2.2.3
   flutter_image_slideshow: ^0.1.6
   readmore: ^3.0.0
+  fluttertoast: ^8.2.5
 
 dev_dependencies:
   flutter_test:

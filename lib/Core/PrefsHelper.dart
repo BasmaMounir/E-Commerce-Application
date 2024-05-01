@@ -7,15 +7,23 @@ class PrefsHelper {
     sharedPreferences = await SharedPreferences.getInstance();
   }
 
-  static Future<void> saveToken(String token) async {
-    await sharedPreferences.setString("token", token);
+  static Future<bool> saveData({required String key, required dynamic value}) {
+    if (value is String) {
+      return sharedPreferences.setString(key, value);
+    } else if (value is int) {
+      return sharedPreferences.setInt(key, value);
+    } else if (value is double) {
+      return sharedPreferences.setDouble(key, value);
+    } else {
+      return sharedPreferences.setBool(key, value);
+    }
   }
 
-  static String getToken() {
-    return sharedPreferences.getString("token") ?? "";
+  static Object? getData({required String key}) {
+    return sharedPreferences.get(key);
   }
 
-  static clearToken() {
-    sharedPreferences.remove("token");
+  static Future<bool> clearData({required String key}) {
+    return sharedPreferences.remove(key);
   }
 }

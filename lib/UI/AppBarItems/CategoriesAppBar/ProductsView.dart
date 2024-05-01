@@ -14,78 +14,89 @@ import 'package:flutter_svg/flutter_svg.dart';
 class ProductsView extends StatelessWidget {
   ProductsView({super.key});
 
-  ProductsViewModel viewModel =
-      ProductsViewModel(productsUseCase: injectAllProductsUseCase());
+  ProductsViewModel viewModel = ProductsViewModel(
+      productsUseCase: injectAllProductsUseCase(),
+      addToCartUseCase: injectAddToCartUseCase());
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProductsViewModel, ProductsStates>(
-      bloc: viewModel..getAllProducts(),
-      builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-              iconSize: 55,
-              icon: SvgPicture.asset(Assets.categoryIcon),
-              onPressed: () {
-                Navigator.pushNamed(context, Routes.categoriesRouteName);
-              },
-            ),
-            actions: [
-              Padding(
-                padding: const EdgeInsets.all(6),
-                child: IconButton(
-                  icon: SvgPicture.asset(Assets.cartIcon),
-                  onPressed: () {},
-                ),
+    return BlocProvider<ProductsViewModel>(
+      create: (context) => viewModel..getAllProducts(),
+      child: BlocBuilder<ProductsViewModel, ProductsStates>(
+        builder: (context, state) {
+          return Scaffold(
+            appBar: AppBar(
+              leading: IconButton(
+                iconSize: 55,
+                icon: SvgPicture.asset(Assets.categoryIcon),
+                onPressed: () {
+                  Navigator.pushNamed(context, Routes.categoriesRouteName);
+                },
               ),
-              Padding(
-                padding: const EdgeInsets.all(6),
-                child: IconButton(
-                  icon: SvgPicture.asset(Assets.searchIcon),
-                  onPressed: () {},
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(6),
-                child: IconButton(
-                  icon: Icon(Icons.logout_outlined),
-                  onPressed: () {
-                    PrefsHelper.clearToken();
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, Routes.loginRouteName, (route) => false);
-                  },
-                ),
-              )
-            ],
-          ),
-          body: state is ProductsLoadingState || viewModel.productsList.isEmpty
-              ? const CircularProgressIndicator(
-                  color: MyColors.turquoise,
-                )
-              : Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 2 / 2.4,
-                        crossAxisSpacing: 16.w,
-                        mainAxisSpacing: 16.w),
-                    itemCount: viewModel.productsList.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) => InkWell(
-                      onTap: () => Navigator.pushNamed(
-                          context, Routes.productDetailsRouteName,
-                          arguments: viewModel.productsList[index]),
-                      child: ProductsItem(
-                        productsEntity: viewModel.productsList[index],
-                        index: index,
-                      ),
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.all(6),
+                  child: Badge(
+                    label: Text(viewModel.numOfCartItems.toString()),
+                    child: IconButton(
+                      icon: SvgPicture.asset(Assets.cartIcon),
+                      onPressed: () {
+                        Navigator.pushNamed(context, Routes.cartRouteName);
+                      },
                     ),
                   ),
                 ),
-        );
-      },
+                Padding(
+                  padding: const EdgeInsets.all(6),
+                  child: IconButton(
+                    icon: SvgPicture.asset(Assets.searchIcon),
+                    onPressed: () {},
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(6),
+                  child: IconButton(
+                    icon: Icon(Icons.logout_outlined),
+                    onPressed: () {
+                      PrefsHelper.clearData(key: 'token');
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, Routes.loginRouteName, (route) => false);
+                    },
+                  ),
+                )
+              ],
+            ),
+            body: state is ProductsLoadingState ||
+                    viewModel.productsList.isEmpty
+                ? const Center(
+                    child: CircularProgressIndicator(
+                      color: MyColors.turquoise,
+                    ),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 2 / 2.4,
+                          crossAxisSpacing: 16.w,
+                          mainAxisSpacing: 16.w),
+                      itemCount: viewModel.productsList.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) => InkWell(
+                        onTap: () => Navigator.pushNamed(
+                            context, Routes.productDetailsRouteName,
+                            arguments: viewModel.productsList[index]),
+                        child: ProductsItem(
+                          productsEntity: viewModel.productsList[index],
+                          index: index,
+                        ),
+                      ),
+                    ),
+                  ),
+          );
+        },
+      ),
     );
   }
 }

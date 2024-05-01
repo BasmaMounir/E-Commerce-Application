@@ -16,7 +16,7 @@ class SplashView extends StatelessWidget {
     Timer(const Duration(seconds: 15), () {
       Navigator.pushReplacementNamed(
           context,
-          PrefsHelper.getToken().isNotEmpty
+          PrefsHelper.getData(key: 'token') != null
               ? Routes.homeRouteName
               : Routes.loginRouteName);
     });

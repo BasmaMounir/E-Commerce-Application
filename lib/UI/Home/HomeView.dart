@@ -48,7 +48,9 @@ class _HomeViewState extends State<HomeView> {
                     padding: const EdgeInsets.all(6),
                     child: IconButton(
                       icon: SvgPicture.asset(Assets.cartIcon),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, Routes.cartRouteName);
+                      },
                     ),
                   ),
                   Padding(
@@ -63,7 +65,7 @@ class _HomeViewState extends State<HomeView> {
                     child: IconButton(
                       icon: Icon(Icons.logout_outlined),
                       onPressed: () {
-                        PrefsHelper.clearToken();
+                        PrefsHelper.clearData(key: 'token');
                         Navigator.pushNamedAndRemoveUntil(
                             context, Routes.loginRouteName, (route) => false);
                       },

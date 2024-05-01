@@ -3,7 +3,9 @@ import 'package:e_commerce_application/Core/Utils/Colors.dart';
 import 'package:e_commerce_application/Core/Utils/ReusableWidgets/AddToCartButton.dart';
 import 'package:e_commerce_application/Core/Utils/ReusableWidgets/AddToFavoriteList.dart';
 import 'package:e_commerce_application/Domain/Entity/Products/ProductsEntity.dart';
+import 'package:e_commerce_application/UI/AppBarItems/CategoriesAppBar/Cubit/ProductsViewModel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -21,6 +23,7 @@ class ProductsItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var bloc = BlocProvider.of<ProductsViewModel>(context);
     return Container(
       width: 191.w,
       height: 237.h,
@@ -100,7 +103,12 @@ class ProductsItem extends StatelessWidget {
               ),
             ],
           ),
-          const AddToCartButton()
+          AddToCartButton(
+            onTap: () {
+              //todo call add to cart function from view model
+              bloc.addToCart(productsEntity.id ?? '');
+            },
+          )
         ],
       ),
     );
