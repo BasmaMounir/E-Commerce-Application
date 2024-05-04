@@ -21,4 +21,10 @@ class GetAllCategoriesRepositoryImpl
   Future<Either<Failures, CategoriesOrBrandsResponseEntity>> getAllBrands() {
     return allCategoriesOrBrandsDataSource.getAllBrands();
   }
+
+  @override
+  Future<Either<Failures, CategoriesOrBrandsResponseEntity>> getSubCategories(
+      String id) {
+    return allCategoriesOrBrandsDataSource.getSubCategories(id);
+  }
 }

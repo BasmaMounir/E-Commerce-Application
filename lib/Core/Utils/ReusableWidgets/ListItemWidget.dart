@@ -1,11 +1,17 @@
 import 'package:e_commerce_application/Core/Utils/Colors.dart';
+import 'package:e_commerce_application/Domain/Entity/Products/ProductsEntity.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ListItemWidget extends StatelessWidget {
   ListItemWidget(
-      {super.key, required this.topButton, required this.bottomButton});
+      {super.key,
+      required this.topButton,
+      required this.bottomButton,
+      required this.productsEntity});
 
+  ProductsEntity productsEntity;
   Widget? bottomButton;
   Widget? topButton;
 
@@ -26,26 +32,31 @@ class ListItemWidget extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: MyColors.white,
                     borderRadius: BorderRadius.circular(20.r)),
-                child: Image.asset(
-                  'assets/images/advertisement1.png',
+                child: Image.network(
+                  productsEntity.imageCover ?? '',
                   height: 113.h,
                   width: 120.w,
                 ),
               ),
               Padding(
                 padding: EdgeInsets.only(left: 18.w),
-                child: const Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Name',
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: MyColors.white,
-                          fontWeight: FontWeight.bold),
+                    SizedBox(
+                      width: 150.w,
+                      child: Text(
+                        productsEntity.title ?? '',
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                            fontSize: 15,
+                            color: MyColors.white,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
-                    Text('EGP 3,500',
-                        style: TextStyle(
+                    Text('${productsEntity.price ?? 0}',
+                        style: const TextStyle(
                             fontSize: 15,
                             color: MyColors.white,
                             fontWeight: FontWeight.normal))

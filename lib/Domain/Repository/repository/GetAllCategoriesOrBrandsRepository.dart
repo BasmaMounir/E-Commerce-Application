@@ -6,5 +6,8 @@ import '../../Entity/Failures.dart';
 abstract class GetAllCategoriesOrBrandsRepository {
   Future<Either<Failures, CategoriesOrBrandsResponseEntity>> getAllCategories();
 
+  Future<Either<Failures, CategoriesOrBrandsResponseEntity>> getSubCategories(
+      String id);
+
   Future<Either<Failures, CategoriesOrBrandsResponseEntity>> getAllBrands();
 }

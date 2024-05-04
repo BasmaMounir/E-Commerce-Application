@@ -7,6 +7,7 @@ import 'package:e_commerce_application/UI/Auth/Login/LoginView.dart';
 import 'package:e_commerce_application/UI/Auth/Register/RegisterView.dart';
 import 'package:e_commerce_application/UI/Home/HomeView.dart';
 import 'package:e_commerce_application/UI/Splash/SplashView.dart';
+import 'package:e_commerce_application/UI/Tabs/HomeTab/SubCategory/SubCategoryView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
           Routes.categoriesRouteName: (context) => ProductsView(),
           Routes.productDetailsRouteName: (context) => ProductDetails(),
           Routes.cartRouteName: (context) => CartView(),
+          Routes.subCategoryRouteName: (context) => SubCategoryView(),
         },
       ),
     );

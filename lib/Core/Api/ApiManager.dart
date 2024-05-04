@@ -11,6 +11,8 @@ import 'package:e_commerce_application/Data/Model/Auth/Response/Register/Registe
 import 'package:e_commerce_application/Data/Model/Cart/AddCartResponseDM.dart';
 import 'package:e_commerce_application/Data/Model/Categories%20or%20Brands/CategoriesOrBrandsResponseDm.dart';
 import 'package:e_commerce_application/Data/Model/ProductsDM/ProductsResponseDM.dart';
+import 'package:e_commerce_application/Data/Model/WishList/GetWishListDM.dart';
+import 'package:e_commerce_application/Data/Model/WishList/WishListDM.dart';
 import 'package:e_commerce_application/Domain/Entity/Failures.dart';
 import 'package:http/http.dart' as http;
 
@@ -148,6 +150,92 @@ class ApiManager {
         return Left(ServerError(errorMessage: getCartResponse.message ?? ''));
       } else {
         return Left(ServerError(errorMessage: getCartResponse.message ?? ''));
+      }
+    } else {
+      return Left(NetworkError(errorMessage: 'No connection'));
+    }
+  }
+
+  Future<Either<Failures, WishListDM>> addToWishList(String productId) async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      var token = PrefsHelper.getData(key: 'token');
+      Uri url = Uri.https(
+          ApiEndPoints.baseUrl, ApiEndPoints.getAndAddToWishListEndPoint);
+      var response = await http.post(url,
+          body: {'productId': productId}, headers: {'token': token.toString()});
+      var getWishListResponse = WishListDM.fromJson(jsonDecode(response.body));
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return right(getWishListResponse);
+      } else if (response.statusCode == 401) {
+        return Left(
+            ServerError(errorMessage: getWishListResponse.message ?? ''));
+      } else {
+        return Left(
+            ServerError(errorMessage: getWishListResponse.message ?? ''));
+      }
+    } else {
+      return Left(NetworkError(errorMessage: 'No connection'));
+    }
+  }
+
+  Future<Either<Failures, GetWishListDm>> getWishList() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      var token = PrefsHelper.getData(key: 'token');
+      Uri url = Uri.https(
+          ApiEndPoints.baseUrl, ApiEndPoints.getAndAddToWishListEndPoint);
+      var response = await http.get(url, headers: {'token': token.toString()});
+      var getWishListResponse =
+          GetWishListDm.fromJson(jsonDecode(response.body));
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return right(getWishListResponse);
+      } else if (response.statusCode == 401) {
+        return Left(
+            ServerError(errorMessage: getWishListResponse.message ?? ''));
+      } else {
+        return Left(
+            ServerError(errorMessage: getWishListResponse.message ?? ''));
+      }
+    } else {
+      return Left(NetworkError(errorMessage: 'No connection'));
+    }
+  }
+
+  Future<String> removeFromWishList(String id) async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      var token = PrefsHelper.getData(key: 'token');
+      Uri url = Uri.https(
+          ApiEndPoints.baseUrl, ApiEndPoints.removeWishListEndPoint + id);
+      var response =
+          await http.delete(url, headers: {'token': token.toString()});
+      var removeWishListResponse =
+          WishListDM.fromJson(jsonDecode(response.body));
+      return removeWishListResponse.message ?? '';
+    } else {
+      return 'No Connection';
+    }
+  }
+
+  Future<Either<Failures, CategoriesOrBrandsResponseDm>> getSubCategories(
+      String id) async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      Uri url = Uri.https(
+          ApiEndPoints.baseUrl, ApiEndPoints.subCategoriesEndPoint(id: id));
+      var response = await http.get(url);
+      var subCategoriesResponse =
+          CategoriesOrBrandsResponseDm.fromJson(jsonDecode(response.body));
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return right(subCategoriesResponse);
+      } else {
+        return Left(
+            ServerError(errorMessage: subCategoriesResponse.message ?? ''));
       }
     } else {
       return Left(NetworkError(errorMessage: 'No connection'));

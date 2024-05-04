@@ -1,4 +1,4 @@
-import 'package:e_commerce_application/Domain/Entity/Products/SubcategoryEntity.dart';
+import 'package:e_commerce_application/Domain/Entity/SubcategoryEntity.dart';
 
 /// _id : "6407f1bcb575d3b90bf95797"
 /// name : "Women's Clothing"

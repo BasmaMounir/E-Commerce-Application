@@ -8,4 +8,9 @@ class ApiEndPoints {
   static const String allBrandsEndPoint = '/api/v1/brands';
   static const String allProductsEndPoint = '/api/v1/products';
   static const String addToCartEndPoint = '/api/v1/cart';
+  static const String getAndAddToWishListEndPoint = '/api/v1/wishlist';
+  static const String removeWishListEndPoint = '/api/v1/wishlist/';
+
+  static String subCategoriesEndPoint({required String id}) =>
+      '/api/v1/categories/$id/subcategories';
 }

@@ -8,22 +8,28 @@ import 'package:e_commerce_application/Data/Repository/Data%20Source/AddToCartDa
 import 'package:e_commerce_application/Data/Repository/Data%20Source/AuthDataSourceImpl.dart';
 import 'package:e_commerce_application/Data/Repository/Data%20Source/GetAllCategoriesOrBrandsDataSourceImpl.dart';
 import 'package:e_commerce_application/Data/Repository/Data%20Source/GetAllProductsDataSourceImpl.dart';
+import 'package:e_commerce_application/Data/Repository/Data%20Source/WishListDataSourceImpl.dart';
 import 'package:e_commerce_application/Data/Repository/repository/AddToCartRepositoryImpl.dart';
 import 'package:e_commerce_application/Data/Repository/repository/AuthRepositoryImpl.dart';
 import 'package:e_commerce_application/Data/Repository/repository/GetAllCategoriesRepositoryImpl.dart';
 import 'package:e_commerce_application/Data/Repository/repository/GetAllProductsRepositoryImpl.dart';
+import 'package:e_commerce_application/Data/Repository/repository/WishListRepositoryImpl.dart';
 import 'package:e_commerce_application/Domain/Repository/Data%20Source/AddToCartDataSource.dart';
 import 'package:e_commerce_application/Domain/Repository/Data%20Source/AuthDataSource.dart';
 import 'package:e_commerce_application/Domain/Repository/Data%20Source/GetAllCategoriesOrBrandsDataSource.dart';
 import 'package:e_commerce_application/Domain/Repository/Data%20Source/GetAllProductsDataSource.dart';
+import 'package:e_commerce_application/Domain/Repository/Data%20Source/WishListDataSource.dart';
 import 'package:e_commerce_application/Domain/Repository/repository/AddToCartRepository.dart';
 import 'package:e_commerce_application/Domain/Repository/repository/AuthRepository.dart';
 import 'package:e_commerce_application/Domain/Repository/repository/GetAllCategoriesOrBrandsRepository.dart';
 import 'package:e_commerce_application/Domain/Repository/repository/GetAllProductsRepository.dart';
+import 'package:e_commerce_application/Domain/Repository/repository/WishListRepository.dart';
 import 'package:e_commerce_application/Domain/UseCase/AddToCartUseCase.dart';
+import 'package:e_commerce_application/Domain/UseCase/AddToWishListUseCase.dart';
 import 'package:e_commerce_application/Domain/UseCase/GetAllBrandsUseCase.dart';
 import 'package:e_commerce_application/Domain/UseCase/GetAllCategoriesUseCase.dart';
 import 'package:e_commerce_application/Domain/UseCase/GetAllProductsUseCase.dart';
+import 'package:e_commerce_application/Domain/UseCase/GetSubCategoryUseCase.dart';
 import 'package:e_commerce_application/Domain/UseCase/LoginUseCase.dart';
 import 'package:e_commerce_application/Domain/UseCase/RegisterUseCase.dart';
 
@@ -37,6 +43,11 @@ LoginUseCase injectLoginUseCase() {
 
 GetAllCategoriesUseCase injectAllCategoriesUseCase() {
   return GetAllCategoriesUseCase(
+      allCategoriesRepository: injectGetAllCategoriesRepository());
+}
+
+GetSubCategoryUseCase injectSubCategoryUseCase() {
+  return GetSubCategoryUseCase(
       allCategoriesRepository: injectGetAllCategoriesRepository());
 }
 
@@ -88,4 +99,18 @@ AddToCartRepository injectAddToCartRepository() {
 
 AddToCartDataSource injectAddToCartDataSource() {
   return AddToCartDataSourceImpl(apiManager: ApiManager.getInstance());
+}
+
+AddToWishListUseCase injectAddToWishListUseCase() {
+  return AddToWishListUseCase(
+      wishListRepository: injectAddToWishListRepository());
+}
+
+WishListRepository injectAddToWishListRepository() {
+  return WishListRepositoryImpl(
+      addToWishListDataSource: injectAddToWishListDataSource());
+}
+
+WishListDataSource injectAddToWishListDataSource() {
+  return WishListDataSourceImpl(apiManager: ApiManager.getInstance());
 }

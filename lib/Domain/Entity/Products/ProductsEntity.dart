@@ -1,6 +1,6 @@
 import 'package:e_commerce_application/Domain/Entity/Categories%20or%20Brands/CategoriesOrBrandsEntity.dart';
 
-import 'SubcategoryEntity.dart';
+import '../SubcategoryEntity.dart';
 
 class ProductsEntity {
   ProductsEntity({

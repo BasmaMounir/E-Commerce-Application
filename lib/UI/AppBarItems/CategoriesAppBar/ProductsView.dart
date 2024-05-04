@@ -56,7 +56,7 @@ class ProductsView extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(6),
                   child: IconButton(
-                    icon: Icon(Icons.logout_outlined),
+                    icon: const Icon(Icons.logout_outlined),
                     onPressed: () {
                       PrefsHelper.clearData(key: 'token');
                       Navigator.pushNamedAndRemoveUntil(

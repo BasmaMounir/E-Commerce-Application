@@ -51,7 +51,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: () {
-                            args.imageCover = args.images?[index] ?? '';
+                            args.imageCover = args.images![index].contains(
+                                    'https://ecommerce.routemisr.com/Route-Academy-products/')!
+                                ? args.images![index] ?? ''
+                                : 'https://ecommerce.routemisr.com/Route-Academy-products/${args.images?[index] ?? ''}';
                             setState(() {});
                           },
                           child: Container(
@@ -61,7 +64,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                             margin: const EdgeInsets.all(5),
                             height: 80.h,
                             width: 90.w,
-                            child: Image.network(args.images?[index] ?? ''),
+                            child: Image.network(args.images![index].contains(
+                                    'https://ecommerce.routemisr.com/Route-Academy-products/')!
+                                ? args.images![index] ?? ''
+                                : 'https://ecommerce.routemisr.com/Route-Academy-products/${args.images?[index] ?? ''}'),
                           ),
                         );
                       },
@@ -75,7 +81,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                           Positioned(
                               top: 5.h,
                               right: 30.w,
-                              child: const AddToFavoriteList()),
+                              child: AddToFavoriteList(
+                                productId: args.id ?? '',
+                              )),
                         ],
                       ))
                 ],

@@ -31,4 +31,15 @@ class GetAllCategoriesOrBrandsDataSourceImpl
       return Right(response);
     });
   }
+
+  @override
+  Future<Either<Failures, CategoriesOrBrandsResponseEntity>> getSubCategories(
+      String id) async {
+    var either = await apiManager.getSubCategories(id);
+    return either.fold((error) {
+      return Left(error);
+    }, (response) {
+      return Right(response);
+    });
+  }
 }

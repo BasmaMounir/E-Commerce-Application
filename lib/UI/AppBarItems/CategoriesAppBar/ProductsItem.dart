@@ -59,7 +59,9 @@ class ProductsItem extends StatelessWidget {
                   Positioned(
                     top: 5.h,
                     left: 2.w,
-                    child: AddToFavoriteList(),
+                    child: AddToFavoriteList(
+                      productId: productsEntity.id ?? '',
+                    ),
                   ),
                 ],
               ),

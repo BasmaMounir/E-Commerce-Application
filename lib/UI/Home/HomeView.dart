@@ -63,7 +63,7 @@ class _HomeViewState extends State<HomeView> {
                   Padding(
                     padding: const EdgeInsets.all(6),
                     child: IconButton(
-                      icon: Icon(Icons.logout_outlined),
+                      icon: const Icon(Icons.logout_outlined),
                       onPressed: () {
                         PrefsHelper.clearData(key: 'token');
                         Navigator.pushNamedAndRemoveUntil(
@@ -115,7 +115,6 @@ class _HomeViewState extends State<HomeView> {
                           itemLabel: 'Page 3',
                         ),
 
-                        ///svg example
                         BottomBarItem(
                           inActiveItem: SvgPicture.asset(
                             Assets.profileIcon,
