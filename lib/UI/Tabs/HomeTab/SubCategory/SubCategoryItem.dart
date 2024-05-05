@@ -4,30 +4,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SubCategoryItem extends StatelessWidget {
-  SubCategoryItem(
-      {super.key, required this.index, required this.productsEntity});
+  SubCategoryItem({super.key, required this.productsEntity});
 
   CategoriesOrBrandsEntity productsEntity;
-  int index;
-  List<Color> colors = [
-    MyColors.honeydew,
-    MyColors.lightYellow,
-    MyColors.mistyRose,
-    MyColors.lavender,
-  ];
 
   @override
   Widget build(BuildContext context) {
+    var args =
+        ModalRoute.of(context)!.settings.arguments as CategoriesOrBrandsEntity;
     return Container(
+      margin: const EdgeInsets.all(10),
       width: 191.w,
-      height: 237.h,
+      height: 137.h,
       decoration: BoxDecoration(
-          color: colors[index % 4],
+          color: MyColors.lightYellow,
           border: Border.all(width: 2, color: Colors.black26),
           borderRadius: BorderRadius.circular(20)),
       child: Stack(
         children: [
-          Column(
+          Row(
             children: [
               Stack(
                 children: [
@@ -44,34 +39,28 @@ class SubCategoryItem extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(25.r),
                       child: Image(
-                        image: NetworkImage(
-                            'https://tse1.mm.bing.net/th?id=OIP.8uBciaVnWPhj3BqjYmH7wgAAAA&pid=Api&P=0&h=220'),
+                        image: NetworkImage(args.image ?? ''),
                         height: 148.h,
                         width: 191.w,
+                        fit: BoxFit.fitHeight,
                       ),
                     ),
                   ),
                 ],
               ),
               SizedBox(
-                height: 10.h,
+                width: 20.w,
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0, left: 8),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      productsEntity.name ?? '',
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.sp,
-                          color: MyColors.darkSlateGray),
-                    ),
-                  ],
+              SizedBox(
+                width: 150.w,
+                child: Text(
+                  productsEntity.name ?? '',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22.sp,
+                      color: MyColors.darkSlateGray),
                 ),
               ),
             ],

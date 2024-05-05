@@ -14,11 +14,8 @@ class SubCategoryViewModel extends Cubit<SubCategoryStates> {
     var either = await subCategoryUseCase.invoke(id);
     either.fold((error) {
       emit(ErrorSubCategoryStates(errorMessage: error.errorMessage));
-      print('/**************${error.errorMessage}');
     }, (response) {
       categoriesList = response.data ?? [];
-      print('/**************${response.results}');
-
       emit(SuccessSubCategoryStates(categoriesOrBrandsEntity: response));
     });
   }

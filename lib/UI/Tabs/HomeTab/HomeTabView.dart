@@ -2,6 +2,7 @@ import 'package:e_commerce_application/Core/DI.dart';
 import 'package:e_commerce_application/Core/Utils/Colors.dart';
 import 'package:e_commerce_application/Core/Utils/ReusableWidgets/RowSection.dart';
 import 'package:e_commerce_application/Core/Utils/Routes.dart';
+import 'package:e_commerce_application/UI/Tabs/HomeTab/Categories%20or%20Brands/CategoriesOrBrandsItem.dart';
 import 'package:e_commerce_application/UI/Tabs/HomeTab/Categories%20or%20Brands/CategoriesOrBrandsSection.dart';
 import 'package:e_commerce_application/UI/Tabs/HomeTab/Cubit/HomeTabViewModel.dart';
 import 'package:e_commerce_application/UI/Tabs/HomeTab/Cubit/States.dart';
@@ -55,8 +56,7 @@ class HomeTabView extends StatelessWidget {
                 const CircularProgressIndicator(
                   color: MyColors.turquoise,
                 )
-              else
-                if (state is AllCategoriesErrorState)
+              else if (state is AllCategoriesErrorState)
                 Text(
                   '${state.error}!!',
                   style: const TextStyle(
@@ -65,14 +65,28 @@ class HomeTabView extends StatelessWidget {
                       color: MyColors.sandyBrown),
                 )
               else
-                InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, Routes.subCategoryRouteName,
-                        arguments: viewModel.categoriesList[2]);
-                  },
-                  child: CategoriesOrBrandsSection(
-                    categoriesEntity: viewModel.categoriesList,
-                  ),
+                Container(
+                  height: 300.h,
+                  child: GridView.builder(
+                      itemCount: viewModel.categoriesList.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, Routes.subCategoryRouteName,
+                                arguments: viewModel.categoriesList[index]);
+                          },
+                          child: CategoriesOrBrandsItem(
+                            categoriesEntity: viewModel.categoriesList[index],
+                          ),
+                        );
+                      },
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisSpacing: 16,
+                              mainAxisSpacing: 16,
+                              crossAxisCount: 2)),
                 ),
               Container(
                 margin: const EdgeInsets.only(top: 20, right: 20, left: 20),
