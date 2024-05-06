@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart' as badges;
 import 'package:e_commerce_application/Core/DI.dart';
 import 'package:e_commerce_application/Core/PrefsHelper.dart';
 import 'package:e_commerce_application/Core/Utils/Assets.dart';
@@ -36,12 +37,16 @@ class ProductsView extends StatelessWidget {
               actions: [
                 Padding(
                   padding: const EdgeInsets.all(6),
-                  child: Badge(
-                    label: Text(viewModel.numOfCartItems.toString()),
+                  child: badges.Badge(
+                    badgeContent: Text(viewModel.numOfCartItems.toString()),
+                    showBadge: true,
+                    ignorePointer: false,
+                    badgeAnimation: const badges.BadgeAnimation.scale(),
                     child: IconButton(
                       icon: SvgPicture.asset(Assets.cartIcon),
                       onPressed: () {
-                        Navigator.pushNamed(context, Routes.cartRouteName);
+                        Navigator.pushNamed(context, Routes.cartRouteName,
+                            arguments: viewModel.productsList);
                       },
                     ),
                   ),
@@ -67,33 +72,33 @@ class ProductsView extends StatelessWidget {
               ],
             ),
             body: state is ProductsLoadingState ||
-                    viewModel.productsList.isEmpty
+                viewModel.productsList.isEmpty
                 ? const Center(
-                    child: CircularProgressIndicator(
-                      color: MyColors.turquoise,
-                    ),
-                  )
+              child: CircularProgressIndicator(
+                color: MyColors.turquoise,
+              ),
+            )
                 : Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 2 / 2.4,
-                          crossAxisSpacing: 16.w,
-                          mainAxisSpacing: 16.w),
-                      itemCount: viewModel.productsList.length,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) => InkWell(
-                        onTap: () => Navigator.pushNamed(
-                            context, Routes.productDetailsRouteName,
-                            arguments: viewModel.productsList[index]),
-                        child: ProductsItem(
-                          productsEntity: viewModel.productsList[index],
-                          index: index,
-                        ),
-                      ),
-                    ),
+              padding: const EdgeInsets.all(8.0),
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 2 / 2.4,
+                    crossAxisSpacing: 16.w,
+                    mainAxisSpacing: 16.w),
+                itemCount: viewModel.productsList.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) => InkWell(
+                  onTap: () => Navigator.pushNamed(
+                      context, Routes.productDetailsRouteName,
+                      arguments: viewModel.productsList[index]),
+                  child: ProductsItem(
+                    productsEntity: viewModel.productsList[index],
+                    index: index,
                   ),
+                ),
+              ),
+            ),
           );
         },
       ),

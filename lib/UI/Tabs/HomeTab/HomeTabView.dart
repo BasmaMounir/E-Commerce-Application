@@ -65,7 +65,7 @@ class HomeTabView extends StatelessWidget {
                       color: MyColors.sandyBrown),
                 )
               else
-                Container(
+                SizedBox(
                   height: 300.h,
                   child: GridView.builder(
                       itemCount: viewModel.categoriesList.length,

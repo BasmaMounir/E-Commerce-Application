@@ -14,7 +14,7 @@ class AddToCartButton extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Container(
-            margin: EdgeInsets.all(10),
+            margin: const EdgeInsets.all(10),
             height: 40.h,
             width: 40.w,
             decoration: BoxDecoration(

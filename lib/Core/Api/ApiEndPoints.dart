@@ -11,6 +11,9 @@ class ApiEndPoints {
   static const String getAndAddToWishListEndPoint = '/api/v1/wishlist';
   static const String removeWishListEndPoint = '/api/v1/wishlist/';
 
+  static String removeFromCartEndPoint({required String id}) =>
+      '/api/v1/cart/$id';
+
   static String subCategoriesEndPoint({required String id}) =>
       '/api/v1/categories/$id/subcategories';
 }

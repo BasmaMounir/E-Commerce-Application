@@ -14,6 +14,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await PrefsHelper.init();
+
   //Bloc.observer = MyB
   runApp(const MyApp());
 }

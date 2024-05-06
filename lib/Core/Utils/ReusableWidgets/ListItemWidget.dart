@@ -9,9 +9,9 @@ class ListItemWidget extends StatelessWidget {
       {super.key,
       required this.topButton,
       required this.bottomButton,
-      required this.productsEntity});
+      this.productsEntity});
 
-  ProductsEntity productsEntity;
+  ProductsEntity? productsEntity;
   Widget? bottomButton;
   Widget? topButton;
 
@@ -33,7 +33,7 @@ class ListItemWidget extends StatelessWidget {
                     color: MyColors.white,
                     borderRadius: BorderRadius.circular(20.r)),
                 child: Image.network(
-                  productsEntity.imageCover ?? '',
+                  productsEntity?.imageCover ?? '',
                   height: 113.h,
                   width: 120.w,
                 ),
@@ -46,7 +46,7 @@ class ListItemWidget extends StatelessWidget {
                     SizedBox(
                       width: 150.w,
                       child: Text(
-                        productsEntity.title ?? '',
+                        productsEntity?.title ?? '',
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
@@ -55,7 +55,7 @@ class ListItemWidget extends StatelessWidget {
                             fontWeight: FontWeight.bold),
                       ),
                     ),
-                    Text('${productsEntity.price ?? 0}',
+                    Text('${productsEntity?.price ?? 0}',
                         style: const TextStyle(
                             fontSize: 15,
                             color: MyColors.white,

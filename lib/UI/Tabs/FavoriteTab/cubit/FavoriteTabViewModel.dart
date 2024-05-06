@@ -35,8 +35,6 @@ class FavoriteTabViewModel extends Cubit<WishListStates> {
       emit(ErrorWishListState(errorMessage: error.errorMessage));
     }, (response) {
       productsList = response.data ?? [];
-      ToastMessage.showToastMessage(
-          message: response.message ?? '', toastColor: MyColors.darkSlateGray);
       emit(SuccessGetWishListState(wishListEntity: response));
     });
   }

@@ -9,6 +9,7 @@ import 'package:e_commerce_application/Data/Model/Auth/Request/RegisterRequest.d
 import 'package:e_commerce_application/Data/Model/Auth/Response/Login/LoginResponseDm.dart';
 import 'package:e_commerce_application/Data/Model/Auth/Response/Register/RegisterResponseDm.dart';
 import 'package:e_commerce_application/Data/Model/Cart/AddCartResponseDM.dart';
+import 'package:e_commerce_application/Data/Model/Cart/GetAndRemoveFromCartDM.dart';
 import 'package:e_commerce_application/Data/Model/Categories%20or%20Brands/CategoriesOrBrandsResponseDm.dart';
 import 'package:e_commerce_application/Data/Model/ProductsDM/ProductsResponseDM.dart';
 import 'package:e_commerce_application/Data/Model/WishList/GetWishListDM.dart';
@@ -156,6 +157,27 @@ class ApiManager {
     }
   }
 
+  Future<Either<Failures, GetAndRemoveFromCartDM>> getCart() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      var token = PrefsHelper.getData(key: 'token');
+      Uri url = Uri.https(ApiEndPoints.baseUrl, ApiEndPoints.addToCartEndPoint);
+      var response = await http.get(url, headers: {'token': token.toString()});
+      var getCartResponse =
+          GetAndRemoveFromCartDM.fromJson(jsonDecode(response.body));
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return right(getCartResponse);
+      } else if (response.statusCode == 401) {
+        return Left(ServerError(errorMessage: getCartResponse.message ?? ''));
+      } else {
+        return Left(ServerError(errorMessage: getCartResponse.message ?? ''));
+      }
+    } else {
+      return Left(NetworkError(errorMessage: 'No connection'));
+    }
+  }
+
   Future<Either<Failures, WishListDM>> addToWishList(String productId) async {
     var connectivityResult = await Connectivity().checkConnectivity();
     if (connectivityResult == ConnectivityResult.mobile ||
@@ -236,6 +258,70 @@ class ApiManager {
       } else {
         return Left(
             ServerError(errorMessage: subCategoriesResponse.message ?? ''));
+      }
+    } else {
+      return Left(NetworkError(errorMessage: 'No connection'));
+    }
+  }
+
+  Future<Either<Failures, GetAndRemoveFromCartDM>> removeSpecificCartItem(
+      String id) async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      var token = PrefsHelper.getData(key: 'token');
+
+      Uri url = Uri.https(
+          ApiEndPoints.baseUrl, ApiEndPoints.removeFromCartEndPoint(id: id));
+      var response =
+          await http.delete(url, headers: {'token': token.toString()});
+      var removeItemResponse =
+          GetAndRemoveFromCartDM.fromJson(jsonDecode(response.body));
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return right(removeItemResponse);
+      } else {
+        return Left(
+            ServerError(errorMessage: removeItemResponse.message ?? ''));
+      }
+    } else {
+      return Left(NetworkError(errorMessage: 'No connection'));
+    }
+  }
+
+  Future<String> clearCart() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      var token = PrefsHelper.getData(key: 'token');
+      Uri url = Uri.https(ApiEndPoints.baseUrl, ApiEndPoints.addToCartEndPoint);
+      var response =
+          await http.delete(url, headers: {'token': token.toString()});
+      var removeItemResponse =
+          GetAndRemoveFromCartDM.fromJson(jsonDecode(response.body));
+      return removeItemResponse.message ?? '';
+    } else {
+      return 'No connection';
+    }
+  }
+
+  Future<Either<Failures, GetAndRemoveFromCartDM>> updateCartItem(
+      String id, int count) async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      var token = PrefsHelper.getData(key: 'token');
+
+      Uri url = Uri.https(
+          ApiEndPoints.baseUrl, ApiEndPoints.removeFromCartEndPoint(id: id));
+      var response = await http.put(url,
+          body: {'count': '$count'}, headers: {'token': token.toString()});
+      var removeItemResponse =
+          GetAndRemoveFromCartDM.fromJson(jsonDecode(response.body));
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return right(removeItemResponse);
+      } else {
+        return Left(
+            ServerError(errorMessage: removeItemResponse.message ?? ''));
       }
     } else {
       return Left(NetworkError(errorMessage: 'No connection'));

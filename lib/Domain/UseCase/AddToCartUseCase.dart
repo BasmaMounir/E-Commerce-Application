@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:e_commerce_application/Domain/Entity/Cart/AddToCartResponseEntity.dart';
-import 'package:e_commerce_application/Domain/Repository/repository/AddToCartRepository.dart';
+import 'package:e_commerce_application/Domain/Repository/repository/CartRepository.dart';
 
 import '../Entity/Failures.dart';
 
 class AddToCartUseCase {
-  AddToCartRepository addToCartRepository;
+  CartRepository addToCartRepository;
 
   AddToCartUseCase({required this.addToCartRepository});
 

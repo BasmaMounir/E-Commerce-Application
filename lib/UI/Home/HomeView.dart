@@ -47,15 +47,6 @@ class _HomeViewState extends State<HomeView> {
                   Padding(
                     padding: const EdgeInsets.all(6),
                     child: IconButton(
-                      icon: SvgPicture.asset(Assets.cartIcon),
-                      onPressed: () {
-                        Navigator.pushNamed(context, Routes.cartRouteName);
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(6),
-                    child: IconButton(
                       icon: SvgPicture.asset(Assets.searchIcon),
                       onPressed: () {},
                     ),
