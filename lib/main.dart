@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'E-Commerce Application',
         debugShowCheckedModeBanner: false,
-        initialRoute: Routes.homeRouteName,
+        initialRoute: Routes.splashRouteName,
         routes: {
           Routes.splashRouteName: (context) => const SplashView(),
           Routes.registerRouteName: (context) => RegisterView(),

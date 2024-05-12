@@ -2,6 +2,7 @@ import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_not
 import 'package:e_commerce_application/Core/PrefsHelper.dart';
 import 'package:e_commerce_application/Core/Utils/Assets.dart';
 import 'package:e_commerce_application/Core/Utils/Colors.dart';
+import 'package:e_commerce_application/Core/Utils/DialogUtils.dart';
 import 'package:e_commerce_application/Core/Utils/Routes.dart';
 import 'package:e_commerce_application/UI/Home/Cubit/HomeStates.dart';
 import 'package:e_commerce_application/UI/Home/Cubit/HomeViewModel.dart';
@@ -57,8 +58,14 @@ class _HomeViewState extends State<HomeView> {
                       icon: const Icon(Icons.logout_outlined),
                       onPressed: () {
                         PrefsHelper.clearData(key: 'token');
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, Routes.loginRouteName, (route) => false);
+                        DialogUtils.showConfirmAlertDialog(
+                          context: context,
+                          message: 'You want to logout',
+                          onCancelClick: () => Navigator.pop(context),
+                          onConfirmClick: () =>
+                              Navigator.pushNamedAndRemoveUntil(context,
+                                  Routes.loginRouteName, (route) => false),
+                        );
                       },
                     ),
                   )

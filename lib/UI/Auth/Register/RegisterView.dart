@@ -40,6 +40,12 @@ class RegisterView extends StatelessWidget {
               PrefsHelper.saveData(
                   key: 'token',
                   value: state.registerResponseEntity?.token ?? '');
+              PrefsHelper.saveData(
+                  key: 'name',
+                  value: state.registerResponseEntity?.user?.name ?? '');
+              PrefsHelper.saveData(
+                  key: 'email',
+                  value: state.registerResponseEntity?.user?.email ?? '');
               ToastMessage.showToastMessage(
                 message:
                     "Login successfully\n Welcome ${state.registerResponseEntity.user?.name ?? ' '}",

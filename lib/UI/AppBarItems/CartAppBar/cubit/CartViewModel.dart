@@ -19,6 +19,7 @@ class CartViewModel extends Cubit<CartStates> {
   GetCartUseCase getCartUseCase;
   List<GetProductEntity> cartList = [];
   int totalPrice = 0;
+  int count = 0;
 
   void removeCartItem(String productId) async {
     emit(GeneralCartState(message: 'Loading...'));

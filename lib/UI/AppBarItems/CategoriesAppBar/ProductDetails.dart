@@ -210,11 +210,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 ],
                               )),
                           onTap: () {
-                            //ToDo !!!!!!!!!!!!!
                             viewModel.addToCart(args.id ?? '');
                           },
                         ),
-                        const IncrementAndDecrementWidget()
+                        IncrementAndDecrementWidget()
                       ],
                     ),
                   ],

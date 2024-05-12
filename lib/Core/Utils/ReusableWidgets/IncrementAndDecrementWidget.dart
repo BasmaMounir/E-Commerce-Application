@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class IncrementAndDecrementWidget extends StatefulWidget {
-  const IncrementAndDecrementWidget({super.key});
+  IncrementAndDecrementWidget({super.key});
+
+  int counter = 0;
 
   @override
   State<IncrementAndDecrementWidget> createState() =>
@@ -12,7 +14,6 @@ class IncrementAndDecrementWidget extends StatefulWidget {
 
 class _IncrementAndDecrementWidgetState
     extends State<IncrementAndDecrementWidget> {
-  int counter = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class _IncrementAndDecrementWidgetState
             ),
             IconButton(
               onPressed: () {
-                counter++;
+                widget.counter++;
                 setState(() {});
               },
               icon: const Icon(
@@ -40,7 +41,7 @@ class _IncrementAndDecrementWidgetState
               width: 15.w,
             ),
             Text(
-              '${counter}',
+              '${widget.counter}',
               style: TextStyle(fontSize: 18.sp, color: MyColors.honeydew),
             ),
             SizedBox(
@@ -48,7 +49,7 @@ class _IncrementAndDecrementWidgetState
             ),
             IconButton(
               onPressed: () {
-                counter--;
+                widget.counter--;
                 setState(() {});
               },
               icon: const Icon(

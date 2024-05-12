@@ -13,7 +13,7 @@ class SplashView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Timer(const Duration(seconds: 15), () {
+    Timer(const Duration(seconds: 8), () {
       Navigator.pushReplacementNamed(
           context,
           PrefsHelper.getData(key: 'token') != null

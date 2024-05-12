@@ -29,14 +29,20 @@ class DialogUtils {
     );
   }
 
-  static void showConfirmAlertDialog(BuildContext context, String message) {
+  static void showConfirmAlertDialog(
+      {required BuildContext context,
+      required String message,
+      void Function()? onConfirmClick,
+      void Function()? onCancelClick}) {
     QuickAlert.show(
       context: context,
       type: QuickAlertType.confirm,
       text: message,
       confirmBtnText: 'Yes',
       cancelBtnText: 'No',
-      confirmBtnColor: Colors.green,
+      onConfirmBtnTap: onConfirmClick,
+      onCancelBtnTap: onCancelClick,
+      confirmBtnColor: MyColors.turquoise,
     );
   }
 

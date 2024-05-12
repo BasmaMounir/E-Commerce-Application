@@ -3,6 +3,7 @@ import 'package:e_commerce_application/Core/Utils/Assets.dart';
 import 'package:e_commerce_application/Core/Utils/Colors.dart';
 import 'package:e_commerce_application/Core/Utils/ReusableWidgets/ListItemWidget.dart';
 import 'package:e_commerce_application/Core/Utils/Routes.dart';
+import 'package:e_commerce_application/UI/AppBarItems/CategoriesAppBar/Cubit/ProductsViewModel.dart';
 import 'package:e_commerce_application/UI/Tabs/FavoriteTab/cubit/FavoriteTabViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,6 +20,9 @@ class FavoriteTabView extends StatefulWidget {
 class _FavoriteTabViewState extends State<FavoriteTabView> {
   FavoriteTabViewModel viewModel =
       FavoriteTabViewModel(addToWishListUseCase: injectAddToWishListUseCase());
+  ProductsViewModel productViewModel = ProductsViewModel(
+      productsUseCase: injectAllProductsUseCase(),
+      addToCartUseCase: injectAddToCartUseCase());
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +45,19 @@ class _FavoriteTabViewState extends State<FavoriteTabView> {
                         border:
                             Border.all(color: MyColors.darkSlateGray, width: 1),
                         borderRadius: BorderRadius.circular(25.r)),
-                    child: Text(
-                      'Add to Cart',
-                      style: TextStyle(
-                          fontSize: 18.sp,
-                          color: MyColors.darkSlateGray,
-                          fontWeight: FontWeight.bold),
+                    child: BlocBuilder(
+                      bloc: productViewModel,
+                      builder: (context, state) => InkWell(
+                        onTap: () => productViewModel
+                            .addToCart(viewModel.productsList[index].id ?? ''),
+                        child: Text(
+                          'Add to Cart',
+                          style: TextStyle(
+                              fontSize: 18.sp,
+                              color: MyColors.darkSlateGray,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
                     ),
                   ),
                   topButton: IconButton(
