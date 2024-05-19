@@ -13,4 +13,5 @@ class MyColors {
   static const Color mistyRose = Color(0xffFFE6E6);
   static const Color lavender = Color(0xffE6EBFF);
   static const Color crimson = Color(0xffE22323);
+  static const Color paymentColor = Color(0xff3A358A);
 }

@@ -10,6 +10,8 @@ class ApiEndPoints {
   static const String addToCartEndPoint = '/api/v1/cart';
   static const String getAndAddToWishListEndPoint = '/api/v1/wishlist';
   static const String removeWishListEndPoint = '/api/v1/wishlist/';
+  static const String API_KEY =
+      'ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmpiR0Z6Y3lJNklrMWxjbU5vWVc1MElpd2ljSEp2Wm1sc1pWOXdheUk2T1RjMk9EQTRMQ0p1WVcxbElqb2lhVzVwZEdsaGJDSjkudjNqb1c3UUFEVXBYdk8zLXJ4dGRiSV90enBBZm51N0NKQzZFbU1NcHFvR2wzd2c2UUFyLUdfXzY0dVEwQmtHV2hnXzhoNVNLSE8wRGttN3lWZlQtbmc=';
 
   static String removeFromCartEndPoint({required String id}) =>
       '/api/v1/cart/$id';

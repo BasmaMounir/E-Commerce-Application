@@ -1,6 +1,7 @@
 import 'package:e_commerce_application/Core/DI.dart';
 import 'package:e_commerce_application/Core/Utils/Assets.dart';
 import 'package:e_commerce_application/Core/Utils/Colors.dart';
+import 'package:e_commerce_application/UI/AppBarItems/CartAppBar/PaymentWidget.dart';
 import 'package:e_commerce_application/UI/AppBarItems/CartAppBar/cubit/CartViewModel.dart';
 import 'package:e_commerce_application/UI/AppBarItems/CartAppBar/cubit/States.dart';
 import 'package:flutter/material.dart';
@@ -210,7 +211,9 @@ class CartView extends StatelessWidget {
                     style: const TextStyle(fontSize: 18),
                   ),
                   ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        showAddTaskBottomSheet(context);
+                      },
                       style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(25)),
@@ -232,6 +235,15 @@ class CartView extends StatelessWidget {
               ),
             ),
           );
+        });
+  }
+
+  void showAddTaskBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+        isDismissible: false,
+        context: context,
+        builder: (buildContext) {
+          return PaymentWidget();
         });
   }
 }

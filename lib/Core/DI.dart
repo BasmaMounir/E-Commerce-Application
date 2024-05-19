@@ -4,25 +4,30 @@
 //todo : data source => object api
 
 import 'package:e_commerce_application/Core/Api/ApiManager.dart';
+import 'package:e_commerce_application/Core/Api/DioApi.dart';
 import 'package:e_commerce_application/Data/Repository/Data%20Source/AuthDataSourceImpl.dart';
 import 'package:e_commerce_application/Data/Repository/Data%20Source/CartDataSourceImpl.dart';
 import 'package:e_commerce_application/Data/Repository/Data%20Source/GetAllCategoriesOrBrandsDataSourceImpl.dart';
 import 'package:e_commerce_application/Data/Repository/Data%20Source/GetAllProductsDataSourceImpl.dart';
+import 'package:e_commerce_application/Data/Repository/Data%20Source/PaymentDataSourceImpl.dart';
 import 'package:e_commerce_application/Data/Repository/Data%20Source/WishListDataSourceImpl.dart';
 import 'package:e_commerce_application/Data/Repository/repository/AuthRepositoryImpl.dart';
 import 'package:e_commerce_application/Data/Repository/repository/CartRepositoryImpl.dart';
 import 'package:e_commerce_application/Data/Repository/repository/GetAllCategoriesRepositoryImpl.dart';
 import 'package:e_commerce_application/Data/Repository/repository/GetAllProductsRepositoryImpl.dart';
+import 'package:e_commerce_application/Data/Repository/repository/PaymentRepositoryImpl.dart';
 import 'package:e_commerce_application/Data/Repository/repository/WishListRepositoryImpl.dart';
 import 'package:e_commerce_application/Domain/Repository/Data%20Source/AuthDataSource.dart';
 import 'package:e_commerce_application/Domain/Repository/Data%20Source/CartDataSource.dart';
 import 'package:e_commerce_application/Domain/Repository/Data%20Source/GetAllCategoriesOrBrandsDataSource.dart';
 import 'package:e_commerce_application/Domain/Repository/Data%20Source/GetAllProductsDataSource.dart';
+import 'package:e_commerce_application/Domain/Repository/Data%20Source/PaymentDataSource.dart';
 import 'package:e_commerce_application/Domain/Repository/Data%20Source/WishListDataSource.dart';
 import 'package:e_commerce_application/Domain/Repository/repository/AuthRepository.dart';
 import 'package:e_commerce_application/Domain/Repository/repository/CartRepository.dart';
 import 'package:e_commerce_application/Domain/Repository/repository/GetAllCategoriesOrBrandsRepository.dart';
 import 'package:e_commerce_application/Domain/Repository/repository/GetAllProductsRepository.dart';
+import 'package:e_commerce_application/Domain/Repository/repository/PaymentRepository.dart';
 import 'package:e_commerce_application/Domain/Repository/repository/WishListRepository.dart';
 import 'package:e_commerce_application/Domain/UseCase/AddToCartUseCase.dart';
 import 'package:e_commerce_application/Domain/UseCase/AddToWishListUseCase.dart';
@@ -32,6 +37,7 @@ import 'package:e_commerce_application/Domain/UseCase/GetAllProductsUseCase.dart
 import 'package:e_commerce_application/Domain/UseCase/GetCartUseCase.dart';
 import 'package:e_commerce_application/Domain/UseCase/GetSubCategoryUseCase.dart';
 import 'package:e_commerce_application/Domain/UseCase/LoginUseCase.dart';
+import 'package:e_commerce_application/Domain/UseCase/PaymentUseCase.dart';
 import 'package:e_commerce_application/Domain/UseCase/RegisterUseCase.dart';
 import 'package:e_commerce_application/Domain/UseCase/RemoveFromCartUseCase.dart';
 import 'package:e_commerce_application/Domain/UseCase/UpdateCartUseCase.dart';
@@ -127,4 +133,16 @@ WishListRepository injectAddToWishListRepository() {
 
 WishListDataSource injectAddToWishListDataSource() {
   return WishListDataSourceImpl(apiManager: ApiManager.getInstance());
+}
+
+PaymentUseCase injectPaymentUseCase() {
+  return PaymentUseCase(paymentRepository: injectPaymentRepository());
+}
+
+PaymentRepository injectPaymentRepository() {
+  return PaymentRepositoryImpl(paymentDataSource: injectPaymentDataSource());
+}
+
+PaymentDataSource injectPaymentDataSource() {
+  return PaymentDataSourceImpl(dioApiManger: DioApiManger());
 }
