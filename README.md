@@ -34,6 +34,9 @@
 <img src= "https://github.com/BasmaMounir/E-Commerce-Application/assets/105162732/ca21fc81-0de8-4708-9e8f-fe19a4f622ef" width="150">
 <img src= "https://github.com/BasmaMounir/E-Commerce-Application/assets/105162732/a49bda59-98c0-4caf-8a30-0fbc35a76c4e" width="150">
 <img src= "https://github.com/BasmaMounir/E-Commerce-Application/assets/105162732/3aac6bf9-e465-4612-a193-a8afd500e911" width="150">
+<img src= "https://github.com/BasmaMounir/E-Commerce-Application/assets/105162732/d1aa98c1-2904-478e-8a18-749d86f9a683" width="150">
+<img src= "https://github.com/BasmaMounir/E-Commerce-Application/assets/105162732/e9ce2288-375f-45d8-924e-2493ee0601e0" width="150">
+
 
 
 
