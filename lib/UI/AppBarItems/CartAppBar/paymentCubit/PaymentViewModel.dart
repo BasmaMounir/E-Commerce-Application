@@ -26,7 +26,7 @@ class PaymentViewModel extends Cubit<PaymentStates> {
       authToken = response.token!;
       await getOrderId();
       await getPaymentRequest(4577183);
-      await getPaymentRequest(4577129);
+      //await getPaymentRequest(4577129);
       await getKiosk();
     });
   }

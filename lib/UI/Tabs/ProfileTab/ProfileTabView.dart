@@ -1,19 +1,15 @@
-import 'package:e_commerce_application/Core/PrefsHelper.dart';
-import 'package:e_commerce_application/Core/Utils/Assets.dart';
 import 'package:e_commerce_application/Core/Utils/Colors.dart';
-import 'package:e_commerce_application/Core/Utils/ReusableWidgets/CustomButton.dart';
 import 'package:e_commerce_application/Core/Utils/ReusableWidgets/CustomTextField.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
 
 class ProfileTabView extends StatelessWidget {
   const ProfileTabView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    var email = PrefsHelper.getData(key: 'email');
-    var name = PrefsHelper.getData(key: 'name');
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(10),
@@ -27,12 +23,12 @@ class ProfileTabView extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-            Center(child: Image.asset(Assets.profileImage)),
+            Center(child: Lottie.asset('assets/lottie/profile.json')),
             CustomTextField(
               textFieldColor: MyColors.darkSlateGray,
               titleColor: MyColors.darkSlateGray,
               title: 'Your full name',
-              hintTitle: '$name',
+              hintTitle: 'Basma Mounir Mohamed',
               controller: TextEditingController(),
               validator: (p0) => p0,
             ),
@@ -40,7 +36,7 @@ class ProfileTabView extends StatelessWidget {
               textFieldColor: MyColors.darkSlateGray,
               titleColor: MyColors.darkSlateGray,
               title: 'Your E-mail',
-              hintTitle: '$email',
+              hintTitle: 'basmaMounir@gmail.com',
               controller: TextEditingController(),
               validator: (p0) => p0,
             ),
@@ -48,7 +44,7 @@ class ProfileTabView extends StatelessWidget {
               textFieldColor: MyColors.darkSlateGray,
               titleColor: MyColors.darkSlateGray,
               title: 'Your password',
-              hintTitle: 'beso5620',
+              hintTitle: '********',
               controller: TextEditingController(),
               validator: (p0) => p0,
             ),
@@ -61,11 +57,8 @@ class ProfileTabView extends StatelessWidget {
               controller: TextEditingController(),
               validator: (p0) => p0,
             ),
-            Center(
-                child: CustomButton(
-                    buttonTitle: 'Update Profile', onPressed: () {})),
             SizedBox(
-              height: 50.h,
+              height: 100.h,
             ),
           ],
         ),
