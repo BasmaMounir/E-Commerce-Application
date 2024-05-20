@@ -26,6 +26,7 @@ class PaymentViewModel extends Cubit<PaymentStates> {
       authToken = response.token!;
       await getOrderId();
       await getPaymentRequest(4577183);
+      await getPaymentRequest(4577129);
       await getKiosk();
     });
   }
@@ -34,7 +35,6 @@ class PaymentViewModel extends Cubit<PaymentStates> {
     emit(LoadingPaymentState());
     var either = await paymentUseCase.invokeGetOrderId(authToken);
     either.fold((error) {
-      print('Error getting order ID: ${error.errorMessage}');
       emit(ErrorPaymentState(message: error.errorMessage));
       ToastMessage.showToastMessage(
           message: error.errorMessage, toastColor: MyColors.salmon);
@@ -45,7 +45,6 @@ class PaymentViewModel extends Cubit<PaymentStates> {
   }
 
   Future<void> getPaymentRequest(int integrationId) async {
-    //await getOrderId();
     if (id.isEmpty) {
       print('Order ID is empty, cannot proceed with payment request.');
       return;
@@ -55,7 +54,6 @@ class PaymentViewModel extends Cubit<PaymentStates> {
     var either =
         await paymentUseCase.invokePaymentRequest(authToken, integrationId, id);
     either.fold((error) {
-      print('Error making payment request 1: ${error.errorMessage}');
       emit(ErrorPaymentState(message: error.errorMessage));
       ToastMessage.showToastMessage(
           message: error.errorMessage, toastColor: MyColors.salmon);
@@ -66,18 +64,15 @@ class PaymentViewModel extends Cubit<PaymentStates> {
   }
 
   Future<void> getKiosk() async {
-    //await getPaymentRequest(4577183);
     emit(LoadingPaymentState());
     var either = await paymentUseCase.invokeKioskResponse(paymentToken);
     either.fold((error) {
-      print('Error making payment request2: ${error.errorMessage}');
       emit(ErrorPaymentState(message: error.errorMessage));
       ToastMessage.showToastMessage(
           message: error.errorMessage, toastColor: MyColors.salmon);
     }, (response) {
       emit(KioskSuccessPaymentState(kioskResponseEntity: response));
       responseEntity = response;
-      print('Iam success*************** ${responseEntity.id}');
     });
   }
 }
