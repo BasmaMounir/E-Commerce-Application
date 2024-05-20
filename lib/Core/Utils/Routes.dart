@@ -7,4 +7,5 @@ class Routes {
   static const String productDetailsRouteName = 'Product Details route';
   static const String cartRouteName = 'cart route';
   static const String subCategoryRouteName = 'sub category route';
+  static const String codeNumberRouteName = 'code Number route';
 }

@@ -1,4 +1,5 @@
 import 'package:e_commerce_application/Core/Utils/ToastMessage.dart';
+import 'package:e_commerce_application/Domain/Entity/Payment/KioskResponseEntity.dart';
 import 'package:e_commerce_application/Domain/UseCase/PaymentUseCase.dart';
 import 'package:e_commerce_application/UI/AppBarItems/CartAppBar/paymentCubit/PaymentStates.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,7 +13,7 @@ class PaymentViewModel extends Cubit<PaymentStates> {
   String authToken = '';
   String id = '';
   String paymentToken = '';
-  int codeNumber = 0;
+  KioskResponseEntity responseEntity = KioskResponseEntity();
 
   void getToken(String apiKey) async {
     emit(LoadingPaymentState());
@@ -20,9 +21,12 @@ class PaymentViewModel extends Cubit<PaymentStates> {
     either.fold((error) {
       print('Error getting token: ${error.errorMessage}');
       emit(ErrorPaymentState(message: error.errorMessage));
-    }, (response) {
+    }, (response) async {
       emit(TokenSuccessPaymentState(getTokenEntity: response));
       authToken = response.token!;
+      await getOrderId();
+      await getPaymentRequest(4577183);
+      await getKiosk();
     });
   }
 
@@ -41,7 +45,7 @@ class PaymentViewModel extends Cubit<PaymentStates> {
   }
 
   Future<void> getPaymentRequest(int integrationId) async {
-    await getOrderId();
+    //await getOrderId();
     if (id.isEmpty) {
       print('Order ID is empty, cannot proceed with payment request.');
       return;
@@ -51,7 +55,7 @@ class PaymentViewModel extends Cubit<PaymentStates> {
     var either =
         await paymentUseCase.invokePaymentRequest(authToken, integrationId, id);
     either.fold((error) {
-      print('Error making payment request: ${error.errorMessage}');
+      print('Error making payment request 1: ${error.errorMessage}');
       emit(ErrorPaymentState(message: error.errorMessage));
       ToastMessage.showToastMessage(
           message: error.errorMessage, toastColor: MyColors.salmon);
@@ -62,18 +66,18 @@ class PaymentViewModel extends Cubit<PaymentStates> {
   }
 
   Future<void> getKiosk() async {
-    await getPaymentRequest(4577183);
+    //await getPaymentRequest(4577183);
     emit(LoadingPaymentState());
     var either = await paymentUseCase.invokeKioskResponse(paymentToken);
     either.fold((error) {
-      print('Error making payment request: ${error.errorMessage}');
+      print('Error making payment request2: ${error.errorMessage}');
       emit(ErrorPaymentState(message: error.errorMessage));
       ToastMessage.showToastMessage(
           message: error.errorMessage, toastColor: MyColors.salmon);
     }, (response) {
       emit(KioskSuccessPaymentState(kioskResponseEntity: response));
-      codeNumber = response.id!.toInt();
-      print('Iam success*************** ${codeNumber}');
+      responseEntity = response;
+      print('Iam success*************** ${responseEntity.id}');
     });
   }
 }

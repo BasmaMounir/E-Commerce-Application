@@ -1,6 +1,7 @@
 import 'package:e_commerce_application/Core/PrefsHelper.dart';
 import 'package:e_commerce_application/Core/Utils/Routes.dart';
 import 'package:e_commerce_application/UI/AppBarItems/CartAppBar/CartView.dart';
+import 'package:e_commerce_application/UI/AppBarItems/CartAppBar/paymentCubit/CodeNumberView.dart';
 import 'package:e_commerce_application/UI/AppBarItems/CategoriesAppBar/ProductDetails.dart';
 import 'package:e_commerce_application/UI/AppBarItems/CategoriesAppBar/ProductsView.dart';
 import 'package:e_commerce_application/UI/Auth/Login/LoginView.dart';
@@ -14,8 +15,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await PrefsHelper.init();
-
-  //Bloc.observer = MyB
   runApp(const MyApp());
 }
 
@@ -39,6 +38,7 @@ class MyApp extends StatelessWidget {
           Routes.productDetailsRouteName: (context) => ProductDetails(),
           Routes.cartRouteName: (context) => CartView(),
           Routes.subCategoryRouteName: (context) => SubCategoryView(),
+          Routes.codeNumberRouteName: (context) => CodeNumberView(),
         },
       ),
     );

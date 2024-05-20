@@ -17,6 +17,8 @@ class CartView extends StatelessWidget {
       updateCartUseCase: injectUpdateCartUseCase(),
       getCartUseCase: injectGetCartUseCase());
 
+  static String totalPrice = '';
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CartViewModel, CartStates>(
@@ -212,6 +214,7 @@ class CartView extends StatelessWidget {
                   ),
                   ElevatedButton(
                       onPressed: () {
+                        totalPrice = viewModel.totalPrice.toString();
                         showAddTaskBottomSheet(context);
                       },
                       style: ElevatedButton.styleFrom(
